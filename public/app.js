@@ -15,6 +15,23 @@ function makeRequest(pinPosition){
 
 function populateSunData(response) {
   var sunData = JSON.parse(response);
+
+  var table = document.querySelector('#main-table');
+  var row1 = table.insertRow(0);
+  row1.style.fontWeight = "900";
+  var row2 = table.insertRow(1);
+
+  var cell1 = row1.insertCell(0);
+  var cell2 = row1.insertCell(1);
+  var cell3 = row2.insertCell(0);
+  var cell4 = row2.insertCell(1);
+  cell1.innerHTML = 'Sunrise is at:';
+  cell2.innerHTML = 'Sunset is at:';
+  cell3.innerHTML =  sunData.results.sunrise;
+  cell4.innerHTML =  sunData.results.sunset;
+
+  table.style.border = "thin solid black"
+
   var chart = new PieChart(sunData);
 };
 
@@ -23,7 +40,6 @@ var PieChart = function(sunData) {
   var dayStr = "Day Length"
   var nightStr = "Night Length";
   var dayLength = sunData.results.day_length;
-  console.log('day length at click loc: ' + dayLength);
 
   var dayLengthTestForChart = 13.5;
   var nightLengthTestForChart = 24 - dayLengthTestForChart;
