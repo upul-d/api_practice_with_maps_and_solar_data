@@ -41,8 +41,35 @@ var PieChart = function(sunData) {
   var nightStr = "Night Length";
   var dayLength = sunData.results.day_length;
 
-  var dayLengthTestForChart = 13.5;
-  var nightLengthTestForChart = 24 - dayLengthTestForChart;
+  var dayLengthJSONStr = JSON.stringify(dayLength);
+  var time = dayLengthJSONStr;
+  time = time.split(':');
+
+  for (var i = 0; i < time.length; i++) {
+    time[i] = time[i].replace(/"/g, "");
+  }
+
+  var hours = Number(time[0]);
+  var minutes = Number(time[1]);
+  var seconds = Number(time[2]);
+
+  var hoursInSeconds = hours * 3600;
+  var minutesInSeconds = minutes * 60;
+  var timeInSeconds = hoursInSeconds + minutesInSeconds + seconds;
+
+  var dayLengthToChart = timeInSeconds / 3600;
+  var dayLengthToRound = dayLengthToChart;
+  var precision = 2;
+
+  var roundedDayLength = function(number, precision) {
+    var factor = Math.pow(10, precision);
+    var tempNumber = number * factor;
+    var roundedTempNumber = Math.round(tempNumber);
+    return roundedTempNumber / factor;
+  };
+
+  var dayLengthToChart = roundedDayLength(dayLengthToRound, precision);
+  var nightLengthToChart = 24 - dayLengthToChart;
 
   var chart = new Highcharts.Chart({
     chart: {
@@ -56,12 +83,12 @@ var PieChart = function(sunData) {
       name: "Hours",
       data: [{
         name: dayStr,
-        y: dayLengthTestForChart,
+        y: dayLengthToChart,
         color: "#ffac33"
       },
       {
         name: nightStr,
-        y: nightLengthTestForChart,
+        y: nightLengthToChart,
         color: "00ff00"
       }]
     }]
