@@ -15,9 +15,42 @@ function makeRequest(pinPosition){
 
 function populateSunData(response) {
   var sunData = JSON.parse(response);
-  console.log('Sunrise at click loc: ' + sunData.results.sunrise + '. Sunset at click loc: ' + sunData.results.sunset);
+  var chart = new PieChart(sunData);
 };
 
+var PieChart = function(sunData) {
+  var container = document.querySelector('#pie-chart');
+  var dayStr = "Day Length"
+  var nightStr = "Night Length";
+  var dayLength = sunData.results.day_length;
+  console.log('day length at click loc: ' + dayLength);
+
+  var dayLengthTestForChart = 13.5;
+  var nightLengthTestForChart = 24 - dayLengthTestForChart;
+
+  var chart = new Highcharts.Chart({
+    chart: {
+      type: 'pie',
+      renderTo: container
+    },
+    title: {
+      text: 'Day-Night Split At Selected Location'
+    },
+    series: [{
+      name: "Hours",
+      data: [{
+        name: dayStr,
+        y: dayLengthTestForChart,
+        color: "#ffac33"
+      },
+      {
+        name: nightStr,
+        y: nightLengthTestForChart,
+        color: "00ff00"
+      }]
+    }]
+  });
+}
 
 var initialize = function() {
   var mapDiv = document.querySelector('#main-map');
