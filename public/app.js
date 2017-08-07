@@ -1,4 +1,4 @@
-function makeRequest(pinPosition){
+var makeRequest = function(pinPosition) {
   var url = "https://api.sunrise-sunset.org/json?lat=" + pinPosition.latLng.lat() + "&lng=" + pinPosition.latLng.lng() + "";
   var request = new XMLHttpRequest();
 
@@ -13,13 +13,21 @@ function makeRequest(pinPosition){
   request.send();
 };
 
-function populateSunData(response) {
+var populateSunData = function(response) {
   var sunData = JSON.parse(response);
+  new PieChart(sunData);
+  new Table(sunData);
+};
 
-  var table = document.querySelector('#main-table');
-  var row1 = table.insertRow(0);
+var Table = function(sunData) {
+  var table1 = document.querySelector('#main-table');
+  while(table1.rows.length > 0) {
+    table1.deleteRow(0);
+  }
+
+  var row1 = table1.insertRow(0);
   row1.style.fontWeight = "900";
-  var row2 = table.insertRow(1);
+  var row2 = table1.insertRow(1);
 
   var cell1 = row1.insertCell(0);
   var cell2 = row1.insertCell(1);
@@ -30,10 +38,8 @@ function populateSunData(response) {
   cell3.innerHTML =  sunData.results.sunrise;
   cell4.innerHTML =  sunData.results.sunset;
 
-  table.style.border = "thin solid black"
-
-  var chart = new PieChart(sunData);
-};
+  table1.style.border = "thin solid black";
+}
 
 var PieChart = function(sunData) {
   var container = document.querySelector('#pie-chart');
