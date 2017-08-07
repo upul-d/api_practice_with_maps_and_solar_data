@@ -1,14 +1,14 @@
+body {
+  display: flex;
+  background: url(old_mathematics.png);
+}
+
 #main-map {
   height: 500px;
-  width: 500px;
-};
-
-#main-table {
-  height: 100px;
-  width: 300px;
+  width: 550px;
 };
 
 #pie-chart {
   height: 500px;
-  width: 500px;
+  width: 600px;
 };

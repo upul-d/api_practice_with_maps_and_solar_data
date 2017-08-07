@@ -39,11 +39,14 @@ var Table = function(sunData) {
   cell4.innerHTML =  sunData.results.sunset;
 
   table1.style.border = "thin solid black";
+  table1.style.height = "75px"
+  table1.style.width = "27%";
 }
 
 var PieChart = function(sunData) {
   var container = document.querySelector('#pie-chart');
-  var dayStr = "Day Length"
+  container.style.border = "thin solid black";
+  var dayStr = "Day Length";
   var nightStr = "Night Length";
   var dayLength = sunData.results.day_length;
 
@@ -103,6 +106,7 @@ var PieChart = function(sunData) {
 
 var initialize = function() {
   var mapDiv = document.querySelector('#main-map');
+  mapDiv.style.border = "thin solid black";
   var center = {lat: 55.9410457, lng: -3.2754232};
   var mainMap = new MapWrapper(mapDiv, center, 5);
   mainMap.addClickEvent(makeRequest);
